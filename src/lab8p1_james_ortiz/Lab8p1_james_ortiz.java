@@ -206,17 +206,85 @@ public class Lab8p1_james_ortiz {
                   {'*','C',' ','$',' ',' ','*'},
                   {'*','*','*','*','*','*','*'},
           };
-          imprimirTablero(mapa);
-         
-      }
-        public static void imprimirTablero(char[][] tablero) {
-        for (int i = 0; i < tablero.length; i++) { 
-            for (int j = 0; j < tablero[i].length; j++) {
-                System.out.print("[" + tablero[i][j] + "]");
+          ArrayList <Character> carrito = new ArrayList<>();
+          int fila = 1;
+          int colum = 1;
+          boolean pago=false;
+          boolean salir =false;
+          while(!salir){
+             for (int i=0;i<mapa.length;i++ ){
+                 for (int j=0;j<mapa[i].length;j++){
+                     if(i==fila&&i==j){
+                         System.out.print("c");
+                     }else{
+                         System.out.print(mapa[i][j]+"");
+                     }
+                 }
+                 System.out.println();
+               
+             } 
+               System.out.println();
+              System.out.println("carrito"+carrito);
+               System.out.print("Movimiento (W/A/S/D): ");
+                char movimiento = Character.toUpperCase(sc.next().charAt(0));
+                int nuevaFila = fila;
+                int nuevaColumna = colum;
+                 switch (movimiento) {
+                    case 'W':
+                        nuevaFila--;
+                        break;
+                    case 'S':
+                        nuevaFila++;
+                        break;
+                    case 'A':
+                        nuevaColumna--;
+                        break;
+                    case 'D':
+                        nuevaColumna++;
+                        break;
+                    default:
+                        System.out.println("Movimiento inválido.");
+                        continue;
+                }
+                if (mapa[nuevaFila][nuevaColumna] == '*') {
+                       System.out.println("No puede atravesar paredes.");
+                       continue;
+                    }
+                
+                 fila = nuevaFila;
+                colum = nuevaColumna;
+
+                char posicion = mapa[fila][colum];
+
+                if (posicion == 'L' || posicion == 'P' || posicion == 'A'
+                        || posicion == 'M' || posicion == 'C') {
+
+                    carrito.add(posicion);
+                    System.out.println("Producto agregado: " + posicion);
+                     mapa[fila][colum] = ' ';
+                }
+                
+                 if (posicion == '$') {
+                System.out.println("Pagando productos...");
+                System.out.println("Productos comprados: " + carrito);
+                carrito.clear();
+                pago = true;
             }
-            System.out.println("");
-        }
-    }
+
+            if (posicion == 'S') {
+
+                if (pago) {
+                    System.out.println("Gracias por su compra.");
+                    salir = true;
+                } else {
+                    System.out.println("Debe pagar antes de salir.");
+                }
+                 
+            }
+          }
+          
+      }
+       
       
      
 }
